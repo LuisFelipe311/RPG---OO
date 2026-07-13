@@ -4,7 +4,7 @@ from typing import List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from inimigo import Inimigo
-    from personagem_jogador import PersonagemJogador
+    from personagem_jogador import PersonagemJogador # pyright: ignore[reportMissingImports]
 
 
 class Missao:

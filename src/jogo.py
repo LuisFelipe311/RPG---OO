@@ -5,7 +5,7 @@ from typing import List, TYPE_CHECKING
 if TYPE_CHECKING:
     from jogador import Jogador
     from missao import Missao
-    from mapa import Mapa
+    from mapa import Mapa # pyright: ignore[reportMissingImports]
 
 
 class Jogo:
