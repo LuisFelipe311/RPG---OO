@@ -1,0 +1,154 @@
+classDiagram
+    class Jogo {
+        -nome : String
+        -cenario : String
+        -historia : String
+        -objetivoPrincipal : String
+        +iniciarJogo()
+        +verificarVitoria() bool
+        +verificarDerrota() bool
+        +adicionarJogador(jogador)
+    }
+
+    class Jogador {
+        -nome : String
+        +escolherPersonagem(personagem)
+        +realizarJogada()
+    }
+
+    class Personagem {
+        <<abstract>>
+        -nome : String
+        -forca : int
+        -inteligencia : int
+        -saude : int
+        -nhFisico : int
+        -nhMental : int
+        -pontosDeVida : int
+        +atacar(alvo)
+        +defender()
+        +usarItem(item)
+        +realizarTesteFisico() bool
+        +realizarTesteMental() bool
+        +receberDano(valor)
+        +recuperarSaude(valor)
+        +estaVivo() bool
+    }
+
+    class PersonagemJogador {
+        -classe : ClassePersonagem
+        -experiencia : int
+        -nivel : int
+        +evoluir()
+    }
+
+    class Inimigo {
+        -tipoInimigo : String
+        -recompensaXp : int
+        +definirComportamento()
+    }
+
+    class ClassePersonagem {
+        <<enumeration>>
+        GUERREIRO
+        MAGO
+        LADINO
+    }
+
+    class Dado {
+        -faces : int
+        +rolar() int
+    }
+
+    class TesteHabilidade {
+        -atributoTestado : String
+        -resultadoDados : int
+        -valorAlvo : int
+        +executarTeste() int
+        +verificarSucesso() bool
+    }
+
+    class Missao {
+        -nome : String
+        -descricao : String
+        -recompensa : String
+        -concluida : bool
+        +verificarConclusao() bool
+        +concederRecompensa()
+    }
+
+    class Item {
+        <<abstract>>
+        -nome : String
+        -descricao : String
+        -valor : int
+        +usar(personagem)
+    }
+
+    class Arma {
+        -dano : int
+        +calcularDano() int
+    }
+
+    class Armadura {
+        -defesa : int
+        +calcularDefesa() int
+    }
+
+    class Pocao {
+        -curaQuantidade : int
+        +aplicarCura(personagem)
+    }
+
+    class Inventario {
+        -capacidadeMaxima : int
+        +adicionarItem(item)
+        +removerItem(item)
+        +listarItens()
+    }
+
+    class Mapa {
+        -nome : String
+        +navegarPara(sala)
+    }
+
+    class Sala {
+        -nome : String
+        -descricao : String
+        +entrar()
+    }
+
+    class Evento {
+        -tipo : String
+        -descricao : String
+        +acionar(personagem)
+    }
+
+    class Combate {
+        -turnoAtual : int
+        -emAndamento : bool
+        +iniciarCombate()
+        +executarTurno()
+        +finalizarCombate()
+    }
+
+    Jogo "1" *-- "1..*" Jogador : possui
+    Jogo "1" *-- "1..*" Missao : contém
+    Jogo "1" *-- "1" Mapa : possui
+    Jogador "1" --> "1" Personagem : controla
+    Personagem <|-- PersonagemJogador
+    Personagem <|-- Inimigo
+    PersonagemJogador "0..*" --> "1" ClassePersonagem : possui
+    Personagem "1" *-- "1" Inventario : possui
+    Inventario "1" o-- "0..*" Item : contém
+    Item <|-- Arma
+    Item <|-- Armadura
+    Item <|-- Pocao
+    TesteHabilidade "1" *-- "3" Dado : utiliza
+    Personagem "1" --> "0..*" TesteHabilidade : realiza
+    Missao "1" --> "0..*" Inimigo : envolve
+    PersonagemJogador "0..*" --> "0..*" Inimigo : enfrenta
+    Mapa "1" *-- "1..*" Sala : composta por
+    Sala "0..*" o-- "0..*" Evento : pode conter
+    Combate "0..*" --> "2" Personagem : envolve
+    Missao ..> PersonagemJogador : concede recompensa
