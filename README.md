@@ -1,2 +1,2 @@
 # RPG---OO
-Projeto de um "jogo" RPG
+Projeto de um RPG
