@@ -1,0 +1,4 @@
+{
+    "extraPaths": ["src", "gui"],
+    "reportMissingImports": "warning"
+}
