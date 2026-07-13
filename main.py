@@ -4,13 +4,13 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 from jogador import Jogador
-from personagem_jogador import PersonagemJogador, ClassePersonagem # pyright: ignore[reportMissingImports]
+from personagem_jogador import PersonagemJogador, ClassePersonagem 
 from inimigo import Inimigo
 from item import Arma, Armadura, Pocao
 from missao import Missao
-from mapa import Mapa, Sala, Evento # pyright: ignore[reportMissingImports]
+from mapa import Mapa, Sala, Evento 
 from jogo import Jogo
-from combate import Combate # pyright: ignore[reportMissingImports]
+from combate import Combate 
 
 
 def main():
