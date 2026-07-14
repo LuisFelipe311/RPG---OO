@@ -1,6 +1,7 @@
 """Tela de criação de personagem."""
 import customtkinter as ctk
 from dado import Dado
+from jogador import Jogador
 from personagem_jogador import PersonagemJogador, ClassePersonagem
 from item import Arma, Pocao
 
@@ -64,6 +65,16 @@ class TelaCriacaoPersonagem(ctk.CTkFrame):
         personagem.inventario.adicionar_item(pocao)
         personagem.usar_item(espada)  # equipa a arma automaticamente
 
+        # Jogador controla exatamente 1 Personagem, conforme a UML
+        jogador = Jogador(nome=f"Jogador de {nome}")
+        jogador.escolher_personagem(personagem)
+        self.app.jogo.jogadores = []  # limpa jogadores de partidas anteriores
+        self.app.jogo.adicionar_jogador(jogador)
+        self.app.jogador = jogador
+
         self.app.personagem = personagem
         self.app.encontro_atual = 0
+
+        hub = self.app.frames["TelaHub"]
+        hub.novo_jogo()
         self.app.mostrar_tela("TelaHub")

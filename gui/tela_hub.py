@@ -8,7 +8,7 @@ class TelaHub(ctk.CTkFrame):
     def __init__(self, master, app):
         super().__init__(master)
         self.app = app
-        self.encontros = criar_encontros()
+        self.encontros = []
 
         self.label_titulo = ctk.CTkLabel(self, text="", font=("Georgia", 24, "bold"))
         self.label_titulo.pack(pady=(30, 5))
@@ -29,6 +29,15 @@ class TelaHub(ctk.CTkFrame):
                       command=self.entrar_na_sala).grid(row=0, column=0, padx=8)
         ctk.CTkButton(botoes, text="Salvar Jogo", width=140,
                       command=self.salvar).grid(row=0, column=1, padx=8)
+
+    def novo_jogo(self):
+        """Recria os encontros do zero (novos inimigos vivos) e registra as
+        missões correspondentes na instância de Jogo, mantendo a implementação
+        coerente com a UML: é o Jogo quem sabe quais missões existem."""
+        self.encontros = criar_encontros()
+        self.app.jogo.missoes = []
+        for encontro in self.encontros:
+            self.app.jogo.adicionar_missao(encontro["missao"])
 
     def ao_mostrar(self):
         self._atualizar_status()

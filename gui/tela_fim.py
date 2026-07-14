@@ -1,3 +1,4 @@
+"""Tela final - Vitória ou Derrota."""
 import os
 import customtkinter as ctk
 
@@ -18,8 +19,10 @@ class TelaFim(ctk.CTkFrame):
                       command=self.reiniciar).pack(pady=30)
 
     def ao_mostrar(self):
+        jogo = self.app.jogo
         personagem = self.app.personagem
-        if personagem and personagem.esta_vivo():
+
+        if jogo.verificar_vitoria():
             self.label_resultado.configure(text="🏆 VITÓRIA!", text_color="#f1c40f")
             self.label_mensagem.configure(
                 text=f"{personagem.nome} derrotou Malachar e salvou o reino de Aetherion!"
@@ -31,9 +34,11 @@ class TelaFim(ctk.CTkFrame):
             )
 
         if os.path.exists("save.json"):
-            os.remove("save.json")
+            os.remove("save.json")  # a partida encerrou, o save antigo não é mais válido
 
     def reiniciar(self):
+        self.app.jogo.jogadores = []
+        self.app.jogador = None
         self.app.personagem = None
         self.app.encontro_atual = 0
         self.app.mostrar_tela("TelaInicial")

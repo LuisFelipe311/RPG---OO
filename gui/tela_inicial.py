@@ -1,5 +1,6 @@
 """Tela inicial - Novo Jogo ou Carregar Jogo."""
 import customtkinter as ctk
+from jogador import Jogador
 from persistencia import existe_save, carregar_jogo
 
 
@@ -31,6 +32,16 @@ class TelaInicial(ctk.CTkFrame):
         if resultado is None:
             return
         personagem, encontro_atual = resultado
+
+        jogador = Jogador(nome=f"Jogador de {personagem.nome}")
+        jogador.escolher_personagem(personagem)
+        self.app.jogo.jogadores = []
+        self.app.jogo.adicionar_jogador(jogador)
+        self.app.jogador = jogador
+
         self.app.personagem = personagem
         self.app.encontro_atual = encontro_atual
+
+        hub = self.app.frames["TelaHub"]
+        hub.novo_jogo()
         self.app.mostrar_tela("TelaHub")

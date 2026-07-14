@@ -1,5 +1,8 @@
+"""Aplicação principal - controla a troca entre as telas do jogo."""
 import customtkinter as ctk
 
+from jogo import Jogo
+from mapa import Mapa
 from tela_inicial import TelaInicial
 from tela_criacao import TelaCriacaoPersonagem
 from tela_hub import TelaHub
@@ -17,6 +20,15 @@ class App(ctk.CTk):
         self.geometry("900x650")
         self.resizable(False, False)
 
+        # A classe Jogo (definida na UML do Nível 1) orquestra jogadores e missões.
+        self.jogo = Jogo(
+            nome="Crônicas de Aetherion",
+            cenario="O reino medieval de Aetherion",
+            historia="Malachar, o Feiticeiro Sombrio, despertou e ameaça o reino.",
+            objetivo_principal="Reunir os Fragmentos do Selo e derrotar Malachar na Torre Esquecida",
+            mapa=Mapa("Torre Esquecida"),
+        )
+        self.jogador = None
         self.personagem = None
         self.encontro_atual = 0
         self.inimigo_atual = None
